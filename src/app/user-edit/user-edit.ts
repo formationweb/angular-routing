@@ -1,16 +1,18 @@
 import { Component, effect, inject, input, Input, numberAttribute, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { User, UserService } from '../core/user-service';
 import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { CanComponentDeactivate } from '../core/guards/confirm.guard';
 
 @Component({
   selector: 'app-user-edit',
-  imports: [],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './user-edit.html',
   styleUrl: './user-edit.css',
 })
-export class UserEdit {
+export class UserEdit implements CanComponentDeactivate {
   //  private route = inject(ActivatedRoute)
   //  private userService = inject(UserService)
 
@@ -26,6 +28,11 @@ export class UserEdit {
   //  }
 
  private userService = inject(UserService)
+ private builder = inject(FormBuilder)
+
+ form = this.builder.group({
+  name: ''
+ })
 
  id = input.required({
   transform: numberAttribute
@@ -34,7 +41,14 @@ export class UserEdit {
     toObservable(this.id).pipe(
       switchMap((id) => {
         return this.userService.getUser(id)
+      }),
+      tap((user) => {
+        this.form.patchValue(user)
       })
     )
   )
+
+  modified(): boolean {
+    return this.form.dirty
+  }
 }

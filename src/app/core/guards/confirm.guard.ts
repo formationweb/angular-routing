@@ -11,7 +11,7 @@ export interface CanComponentDeactivate {
 export const canDeactivateGuard: CanDeactivateFn<CanComponentDeactivate> = (component) => {
     const dialog = inject(Dialog)
 
-    if (typeof component.modified != 'function') {
+    if (typeof component?.modified != 'function') {
         console.warn('...')
         return true
     }

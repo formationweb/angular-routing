@@ -7,6 +7,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CanComponentDeactivate } from '../core/guards/confirm.guard';
 import { Dialog } from '@angular/cdk/dialog';
 import { DialogInput, UserDialog } from './user-dialog';
+import { AdminModule } from './admin.module';
 
 @Component({
   selector: 'app-user-edit',

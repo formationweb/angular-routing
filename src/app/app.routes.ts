@@ -1,6 +1,5 @@
 import { canDeactivateGuard } from './core/guards/confirm.guard';
 import { Routes } from '@angular/router';
-import { UserEdit } from './user-edit/user-edit';
 import { authGuard } from './core/guards/auth.guard';
 import { Login } from './login/login';
 import { permissionGuard } from './core/guards/permission.guard';
@@ -14,13 +13,8 @@ export const routes: Routes = [
   },
   {
     path: 'user/:id',
-    component: UserEdit,
-    canActivate: [authGuard, permissionGuard],
-    canDeactivate: [canDeactivateGuard],
-    data: {
-      requiredAuth: true,
-      requiredPermissions: ['user.edit', 'user.delete'],
-    },
+   // loadComponent: () => import('./user-edit/user-edit').then(m => m.UserEdit),
+    loadChildren: () => import('./user-edit/admin.routes').then(m => m.routes)
   },
   {
     path: 'login',

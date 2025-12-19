@@ -17,8 +17,9 @@ export const routes: Routes = [
    // loadComponent: () => import('./user-edit/user-edit').then(m => m.UserEdit),
     loadChildren: () => import('./user-edit/admin.routes').then(m => m.routes),
     data: {
-      preload: true
-    }
+      preload: false
+    },
+    canMatch: [authGuard]
   },
   {
     path: 'login',
@@ -28,4 +29,8 @@ export const routes: Routes = [
     path: 'forbidden',
     component: Forbidden
   },
+  {
+    path: '**',
+    component: Forbidden
+  }
 ];

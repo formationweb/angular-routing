@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +9,13 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   protected readonly title = signal('myapp');
+  private router = inject(Router)
+
+  constructor() {
+    this.router.events.subscribe((event) => {
+       if (event instanceof NavigationStart) {
+        console.log(event.id)
+       }
+    })
+  }
 }

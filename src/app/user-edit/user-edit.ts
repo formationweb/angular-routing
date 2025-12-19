@@ -9,6 +9,14 @@ import { Dialog } from '@angular/cdk/dialog';
 import { DialogInput, UserDialog } from './user-dialog';
 import { AdminModule } from './admin.module';
 import { HeavySimulationComponent } from '../components/heavy.component';
+import { Overlay } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
+
+@Component({
+  selector: 'app-test',
+  template: `<h1>test</h1>`
+})
+class Test {}
 
 @Component({
   selector: 'app-user-edit',
@@ -34,6 +42,7 @@ export class UserEdit implements CanComponentDeactivate {
  private userService = inject(UserService)
  private builder = inject(FormBuilder)
  private dialog = inject(Dialog)
+ private overlay = inject(Overlay)
 
  form = this.builder.group({
   name: ''
@@ -69,5 +78,22 @@ export class UserEdit implements CanComponentDeactivate {
     dialogRef.closed.subscribe(() => {
       console.log('fermé')
     })
+  }
+
+  openOverlay() {
+     const overlayRef = this.overlay.create({
+        hasBackdrop: true,
+        positionStrategy: this.overlay
+          .position()
+          .global()
+          .centerHorizontally()
+          .centerVertically()
+     })
+     overlayRef.attach(new ComponentPortal(Test))
+
+     overlayRef.backdropClick().subscribe(() => {
+      overlayRef.detach()
+      overlayRef.dispose()
+     })
   }
 }

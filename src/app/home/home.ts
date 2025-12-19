@@ -16,6 +16,6 @@ export class Home {
   constructor() {
     setTimeout(() => {
       this.isConnected.next(true)
-    }, 2000)
+    }, 5000)
   }
 }

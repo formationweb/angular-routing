@@ -1,5 +1,5 @@
 import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withDebugTracing, withPreloading } from '@angular/router';
+import { provideRouter, Router, withComponentInputBinding, withDebugTracing, withPreloading, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
@@ -12,7 +12,15 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, 
         withComponentInputBinding(),
         withPreloading(AdminPreloadingStrategy),
-        withDebugTracing()
+        withDebugTracing(),
+        withViewTransitions({
+          // onViewTransitionCreated: ({ transition }) => {
+          //   const router = inject(Router)
+          //   const targetUrl = router.currentNavigation()?.finalUrl
+
+          //   transition.skipTransition()
+          // }
+        })
     ),
     provideHttpClient(),
     provideAppInitializer(() => {

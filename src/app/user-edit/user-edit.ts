@@ -11,6 +11,7 @@ import { AdminModule } from './admin.module';
 import { HeavySimulationComponent } from '../components/heavy.component';
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
+import { DrawerService } from '../core/drawer/drawer';
 
 @Component({
   selector: 'app-test',
@@ -41,8 +42,8 @@ export class UserEdit implements CanComponentDeactivate {
 
  private builder = inject(FormBuilder)
  private dialog = inject(Dialog)
- private overlay = inject(Overlay)
  private viewContainerRef = inject(ViewContainerRef)
+ private drawerService = inject(DrawerService)
 
  drawer = viewChild<TemplateRef<any>>('drawerTpl')
 
@@ -89,30 +90,7 @@ export class UserEdit implements CanComponentDeactivate {
     })
   }
 
-  openOverlay() {
-      if (!this.drawer()) return
-
-     const overlayRef = this.overlay.create({
-        hasBackdrop: true,
-        positionStrategy: this.overlay
-          .position()
-          .global()
-          .centerHorizontally()
-          .centerVertically(),
-        
-     })
-
-     const portal = new TemplatePortal(this.drawer()!, this.viewContainerRef, {
-      config: {
-        title: 'test'
-      }
-     })
-
-     overlayRef.attach(portal)
-
-     overlayRef.backdropClick().subscribe(() => {
-      overlayRef.detach()
-      overlayRef.dispose()
-     })
+  edit() {
+     this.drawerService.open(this.drawer()!, this.viewContainerRef)
   }
 }

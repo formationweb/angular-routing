@@ -1,9 +1,20 @@
 <p>home works!</p>
 <button routerLink="/user/1">Modifier utilisateur 1</button>
 
-@defer (when isConnected | async ; on hover) {
+@let isAuth = isConnected | async;
+
+<!-- 
+
+@defer (when isAuth ; on hover) {
     <p>test</p>
 }
 @placeholder {
     <p>pp</p>
+} -->
+
+@if (isAuth) {
+    <p animate.enter="enter-animation" >est connecté</p>
+}
+@else {
+    <p animate.enter="enter-animation" animate.leave="leave-animation ">est pas connecté</p>
 }

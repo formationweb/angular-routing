@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, Input, numberAttribute, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, input, Input, numberAttribute, OnInit, signal, TemplateRef, viewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { User, UserService } from '../core/user-service';
 import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -10,7 +10,7 @@ import { DialogInput, UserDialog } from './user-dialog';
 import { AdminModule } from './admin.module';
 import { HeavySimulationComponent } from '../components/heavy.component';
 import { Overlay } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
+import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 
 @Component({
   selector: 'app-test',
@@ -42,6 +42,9 @@ export class UserEdit implements CanComponentDeactivate {
  private builder = inject(FormBuilder)
  private dialog = inject(Dialog)
  private overlay = inject(Overlay)
+ private viewContainerRef = inject(ViewContainerRef)
+
+ drawer = viewChild<TemplateRef<any>>('drawerTpl')
 
  form = this.builder.group({
   name: ''
@@ -87,15 +90,25 @@ export class UserEdit implements CanComponentDeactivate {
   }
 
   openOverlay() {
+      if (!this.drawer()) return
+
      const overlayRef = this.overlay.create({
         hasBackdrop: true,
         positionStrategy: this.overlay
           .position()
           .global()
           .centerHorizontally()
-          .centerVertically()
+          .centerVertically(),
+        
      })
-     overlayRef.attach(new ComponentPortal(Test))
+
+     const portal = new TemplatePortal(this.drawer()!, this.viewContainerRef, {
+      config: {
+        title: 'test'
+      }
+     })
+
+     overlayRef.attach(portal)
 
      overlayRef.backdropClick().subscribe(() => {
       overlayRef.detach()

@@ -19,7 +19,7 @@ export const routes: Routes = [
     data: {
       preload: false
     },
-    canMatch: [authGuard]
+   // canMatch: [authGuard]
   },
   {
     path: 'login',

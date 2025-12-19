@@ -15,7 +15,7 @@ export type DialogInput = {
     `,
     styles: `
         .dialog {
-            backgroundColor: white;
+            background-color: white;
         }
     `
 })

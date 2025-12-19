@@ -5,6 +5,7 @@ import { Login } from './login/login';
 import { permissionGuard } from './core/guards/permission.guard';
 import { Forbidden } from './forbidden/forbidden';
 import { Home } from './home/home';
+import { routes as adminRoutes } from './user-edit/admin.routes'
 
 export const routes: Routes = [
   {
@@ -13,12 +14,15 @@ export const routes: Routes = [
     
   },
   {
-    path: 'user/:id',
+    path: 'user',
    // loadComponent: () => import('./user-edit/user-edit').then(m => m.UserEdit),
-    loadChildren: () => import('./user-edit/admin.routes').then(m => m.routes),
+   // loadChildren: () => import('./user-edit/admin.routes').then(m => m.routes),
     data: {
       preload: false
     },
+    children: [
+      ...adminRoutes
+    ]
    // canMatch: [authGuard]
   },
   {

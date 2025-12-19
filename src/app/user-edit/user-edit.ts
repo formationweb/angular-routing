@@ -39,7 +39,6 @@ export class UserEdit implements CanComponentDeactivate {
   //    }
   //  }
 
- private userService = inject(UserService)
  private builder = inject(FormBuilder)
  private dialog = inject(Dialog)
  private overlay = inject(Overlay)
@@ -51,16 +50,23 @@ export class UserEdit implements CanComponentDeactivate {
  id = input.required({
   transform: numberAttribute
  })
-  user = toSignal(
-    toObservable(this.id).pipe(
-      switchMap((id) => {
-        return this.userService.getUser(id)
-      }),
-      tap((user) => {
-        this.form.patchValue(user)
-      })
-    )
-  )
+ user = input.required<User>()
+  // user = toSignal(
+  //   toObservable(this.id).pipe(
+  //     switchMap((id) => {
+  //       return this.userService.getUser(id)
+  //     }),
+  //     tap((user) => {
+  //       this.form.patchValue(user)
+  //     })
+  //   )
+  // )
+
+  constructor() {
+    effect(() => {
+      this.form.patchValue(this.user())
+    })
+  }
 
   modified(): boolean {
     return this.form.dirty

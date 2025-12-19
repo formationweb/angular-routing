@@ -10,7 +10,8 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes, 
         withComponentInputBinding(),
-        withPreloading(AdminPreloadingStrategy)
+        withPreloading(AdminPreloadingStrategy),
+        withDebugTracing()
     ),
     provideHttpClient()
   ]

@@ -8,10 +8,11 @@ import { CanComponentDeactivate } from '../core/guards/confirm.guard';
 import { Dialog } from '@angular/cdk/dialog';
 import { DialogInput, UserDialog } from './user-dialog';
 import { AdminModule } from './admin.module';
+import { HeavySimulationComponent } from '../components/heavy.component';
 
 @Component({
   selector: 'app-user-edit',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, HeavySimulationComponent],
   templateUrl: './user-edit.html',
   styleUrl: './user-edit.css',
 })

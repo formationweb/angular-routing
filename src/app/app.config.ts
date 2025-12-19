@@ -11,7 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, 
         withComponentInputBinding(),
         withPreloading(AdminPreloadingStrategy),
-        withDebugTracing()
+       // withDebugTracing()
     ),
     provideHttpClient()
   ]

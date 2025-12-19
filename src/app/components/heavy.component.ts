@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+function fib(n: number): number {
+  return n <= 1 ? n : fib(n - 1) + fib(n - 2);
+}
+
 @Component({
   selector: 'app-heavy-simulation',
   standalone: true,
@@ -15,11 +19,9 @@ export class HeavySimulationComponent implements OnInit {
   ngOnInit(): void {
     const start = performance.now();
 
-    // Simulation d’un traitement CPU coûteux
-    let total = 0;
-    for (let i = 0; i < 40_000_000; i++) {
-      total += i;
-    }
+    const a = fib(45)
+
+    console.log(a)
 
     console.log(
       '[HeavySimulation] Temps de calcul :',

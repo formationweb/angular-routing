@@ -10,11 +10,15 @@ export const routes: Routes = [
   {
     path: '',
     component: Home,
+    
   },
   {
     path: 'user/:id',
    // loadComponent: () => import('./user-edit/user-edit').then(m => m.UserEdit),
-    loadChildren: () => import('./user-edit/admin.routes').then(m => m.routes)
+    loadChildren: () => import('./user-edit/admin.routes').then(m => m.routes),
+    data: {
+      preload: true
+    }
   },
   {
     path: 'login',
@@ -22,6 +26,6 @@ export const routes: Routes = [
   },
   {
     path: 'forbidden',
-    component: Forbidden,
+    component: Forbidden
   },
 ];

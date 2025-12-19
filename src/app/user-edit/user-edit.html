@@ -8,3 +8,16 @@
 
     <button (click)="openRoleDialog()">Choisir un role</button>
 </form>
+
+@defer (on idle ; on hover) {
+    <app-heavy-simulation />
+}
+@placeholder {
+    <p>...</p>
+}
+@loading {
+    <p>Loading</p>
+}
+@error {
+    <p>Erreur</p>
+}
